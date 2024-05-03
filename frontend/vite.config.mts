@@ -16,25 +16,6 @@ import { fileURLToPath, URL } from "node:url";
 export default defineConfig({
   plugins: [
     VitePWA({
-      manifest: {
-        name: "TODO",
-        short_name: "TODO",
-        icons: [
-          {
-            src: "/android-chrome-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "/android-chrome-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-        ],
-        theme_color: "#2cd538",
-        background_color: "#2cd538",
-        display: "standalone",
-      },
       registerType: "autoUpdate",
       injectRegister: "auto",
       devOptions: {
