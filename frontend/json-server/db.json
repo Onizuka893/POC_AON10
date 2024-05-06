@@ -1,3 +1,19 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "2bc25844-f5b1-452c-8bff-66204fa648a5",
+      "text": "test",
+      "done": false
+    },
+    {
+      "id": "700ad9f8-b5e0-4df1-9f98-e3a30e8959b9",
+      "text": "test2",
+      "done": true
+    },
+    {
+      "id": "d6eb2980-eb3f-460b-bbe6-628088a6e8c0",
+      "text": "dede",
+      "done": false
+    }
+  ]
 }

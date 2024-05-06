@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import {v4 as uuidv4} from 'uuid';
-import axios, {AxiosRequestConfig} from "axios";
+import axios from "axios";
 
 interface Todo {
   id: string;
@@ -8,18 +8,8 @@ interface Todo {
   done: boolean;
 }
 
-const url = 'https://api.jsonbin.io/b/6638ab93ad19ca34f8653ae8';
-const accessKey = '$2a$10$44.y1VHW8hXSz11Kf/tQgeDL9aQgtPpUctpBpezdOctpeGwwWY2rW';
 
-const headers = {
-  'Content-Type': 'application/json',
-  'x-access-key': accessKey
-};
-
-// Define Axios request configuration
-const axiosConfig: AxiosRequestConfig = {
-  headers: headers
-};
+const url = 'http://localhost:8000/todos';
 
 export const useTodoStore = defineStore("todoStore", {
   state: () => ({
@@ -36,7 +26,7 @@ export const useTodoStore = defineStore("todoStore", {
     async fetchTodos() {
       try {
         this.loading = true;
-        const response = await axios.get(url, axiosConfig);
+        const response = await axios.get(url);
         console.log("this is it: " + response.data)
         this.todos = response.data;
       } catch (error) {
@@ -53,7 +43,7 @@ export const useTodoStore = defineStore("todoStore", {
           id: myuuid,
           text: newTodo,
           done: false,
-        }, axiosConfig);
+        });
         this.todos.push(response.data);
       } catch (error) {
         this.error = error.message;
@@ -69,7 +59,7 @@ export const useTodoStore = defineStore("todoStore", {
         console.log(todo);
         const response = await axios.patch(`${url}/${todoId}`, {
           done: !todo.done,
-        }, axiosConfig);
+        });
         this.todos.push(response.data);
       } catch (error) {
         this.error = error.message;
@@ -80,7 +70,7 @@ export const useTodoStore = defineStore("todoStore", {
     async deleteTodo(todoId: string) {
       try {
         this.loading = true;
-        await axios.delete(`${url}/${todoId}`, axiosConfig);
+        await axios.delete(`${url}/${todoId}`);
         this.todos = this.todos.filter((todo) => todo.id !== todoId);
       } catch (error) {
         this.error = error.message;
