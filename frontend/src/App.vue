@@ -4,7 +4,6 @@
       <h1>Todo App</h1>
       <TodoInput></TodoInput>
       <TodoList
-        :todos="todos"
         :markDone="markDone"
         :deleteTodo="deleteTodo"
       ></TodoList>
@@ -13,10 +12,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {computed, defineComponent, ref} from "vue";
 import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
-import { useTodoStore } from "./stores/store.ts";
+import { useTodoStore } from "./stores/apistore.ts";
 
 export default defineComponent({
   components: {
@@ -27,9 +26,8 @@ export default defineComponent({
     const store = useTodoStore();
 
     return {
-      todos: store.todos,
       addTodo: store.addTodo,
-      markDone: store.markDone,
+      markDone: store.updateTodoStatus,
       deleteTodo: store.deleteTodo,
     };
   },

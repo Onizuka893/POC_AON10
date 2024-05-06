@@ -13,8 +13,8 @@
             <p :class="{ 'todo-done': todo.done }">{{ todo.text }}</p>
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="markDone(index)" v-if="!todo.done">Mark Done</v-btn>
-            <v-btn @click="deleteTodo(index)">Delete</v-btn>
+            <v-btn @click="markDone(todo.id)" v-if="!todo.done">Mark Done</v-btn>
+            <v-btn @click="deleteTodo(todo.id)">Delete</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -23,7 +23,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {computed, defineComponent} from "vue";
+import {useTodoStore} from "../stores/apistore";
 
 interface Todo {
   text: string;
@@ -32,13 +33,21 @@ interface Todo {
 
 export default defineComponent({
   props: {
-    todos: {
-      type: Array as () => Todo[],
-      required: true,
-    },
     markDone: Function as (index: number) => void,
     deleteTodo: Function as (index: number) => void,
   },
+  setup() {
+    const store = useTodoStore();
+    const todos = computed(() => store.getTasks);
+
+    onMounted(async () => {
+      await store.fetchTodos();
+    });
+
+    return {
+      todos,
+    }
+  }
 });
 </script>
 
