@@ -37,6 +37,38 @@ export default defineConfig({
         background_color: "#2cd538",
         display: "standalone",
       },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern:
+              /^https:\/\/api\.jsonbin\.io\/v3\/b\/663b7bfee41b4d34e4f096e5/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "api-cache",
+              expiration: {
+                maxAgeSeconds: 60 * 60 * 24, // Cache for 1 day
+              },
+              matchOptions: {
+                ignoreSearch: true, // Ignore query parameters
+              },
+            },
+          },
+          {
+            urlPattern:
+              /^https:\/\/api\.jsonbin\.io\/v3\/b\/663b7bfee41b4d34e4f096e5/,
+            handler: "NetworkOnly",
+            method: "PUT",
+            options: {
+              backgroundSync: {
+                name: "myQueueName",
+                options: {
+                  maxRetentionTime: 24 * 60, // Retry for 24 hours
+                },
+              },
+            },
+          },
+        ],
+      },
       registerType: "autoUpdate",
       injectRegister: "auto",
       devOptions: {
