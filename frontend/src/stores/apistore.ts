@@ -10,7 +10,7 @@ interface Todo {
 
 //const url = 'http://localhost:8000/todos';
 const url = "https://api.jsonbin.io/v3/b/663b7bfee41b4d34e4f096e5";
-const apiKey = "$2a$10$91UChaLHKsSkyjShQBXJ0OzU70w3ntALo4UUJncNcICQcD7KIeUwK";
+const apiKey = process.env.JSONBIN_API_KEY;
 
 export const useTodoStore = defineStore("todoStore", {
   state: () => ({
